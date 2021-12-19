@@ -1,0 +1,62 @@
+                    <----BASIC APPROACH USING RECURSION---->
+                    
+                    
+(CALLING THE SAME FUNCTION AGAIN AND AGAIN FOR (n-1) and (n-2) FOR EVERY TERM)
+(THIS LEADS TO THE TIME COMPLEXITY OF NEARLY (2^n) FOR LARGE INPUTS)
+
+Code : 
+
+ int fib(int n){
+ if (n==0 || n==1){
+     return n;
+ }
+ int sum=fib(n-1)+fib(n-2);       // using recursion in this line.
+ return sum;
+ }
+                     
+                     
+                     
+                     
+                     
+                     <----APPROACH USING DYNAMIC PROGRAMMING---->
+                     
+                     
+(IN THIS APPROACH WE DECLARE A VECTOR OR AN ARRAY AND SET V[O]=0 AND V[1]=1)
+(NEXT STEP IS WE RUN A FOR LOOP FROM 2 to N AND FOR EACH ITERATION WE STORE THE RESULT OF THAT Ith ITERATION IN OUR VECTOR)
+(SO IN THIS WAY WE DONT HAVE TO CALL THE SAME FUNCTION AGAIN AND AGAIN IF THE SAME NUMBER APPEAR IN FUTURE, INSTEAD WE USE OUR VECTOR TO ACCESS THE VALUE OF THAT NUMBER)
+(THIS LEADS THE TIME COMPLEXITY OF NEARLY O(n) WHICH IS FAR BETTER THAN O(2^n))
+                     
+
+Code :
+                                        
+#include<bits/stdc++.h>
+using namespace std;
+int DPfib(int n){
+vector<int>v(1e5, -1);
+v[0]=0;
+v[1]=1;
+if(v[n]!=-1){
+    return v[n];
+}
+int sum;
+for(int i=2;i<=n;i++){
+    v[i]=v[i-1]+v[i-2];
+}
+return v[n];
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+
+    int n=5;
+    cout<<DPfib(8);
+
+return 0;
+}
+                    
+                    
+
+
+
