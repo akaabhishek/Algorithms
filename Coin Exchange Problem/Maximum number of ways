@@ -1,0 +1,59 @@
+DESCRIPTION ---> WE ARE GIVEN WITH SOME N COINS OF DIFFERENT DENOMINATIONS AND AMOUNT K. WE HAVE TO CALCULATE THE MAXIMUM NUMBER OF WAYS IN WHICH WE CAN MAKE THAT AMOUNT
+                 USING THE GIVEN COINS.
+                 USING CONCEPT OF DYNAIC PROGRAMMING WE CAN SOLVE THIS GIVEN PROBLEM IN O(KN) TIME COMPLEXITY
+                 SAMPLE CASE :   COINS = {1,2,3},    AMOUNT(K)=5
+                 TOTAL NUMBER OF WAYS : {(1,1,1,1,1), (1,1,1,2), (1,2,2), (1,1,3), (2,3)} -----> MAXIMUM 5 WAYS POSSIBLE
+                 
+                 
+CODE :
+
+// MAXIMUM NUMBER OF WAYS IN WHICH A GIVEN AMOUNT CAN BE MAKE USING THE GIVEN COINS OF DIFFERENT DENOMINATIONS.
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int maxWays(vector<int>&v, int k){
+    int size = v.size();
+    sort(v.begin(), v.end());
+    int dp[size][k+1];
+    for(int i=0;i<size;i++){    // filling first row
+        dp[i][0]=1;
+    }
+    for(int j=1;j<=k;j++){
+        if(j%v[0]==0){         // filling first column
+            dp[0][j]=1;
+        }
+        else{
+            dp[0][j]=0;
+        }
+    }
+
+    for(int i=1;i<size;i++){
+        for(int j=1;j<k+1;j++){
+            if(v[i]>j){
+                dp[i][j]=dp[i-1][j];
+            }
+            else{
+                dp[i][j]=dp[i-1][j]+dp[i][j-v[i]];
+            }
+        }
+    }
+    return dp[size-1][k];
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+
+    int n,k;
+    cin>>n>>k;
+    vector<int>v(n);
+    for(int i=0;i<n;i++){
+        cin>>v[i];
+    }
+    int ans = maxWays(v,k);
+    cout<<ans<<endl;
+
+return 0;
+}
