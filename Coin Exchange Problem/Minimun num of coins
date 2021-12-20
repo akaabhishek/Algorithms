@@ -1,0 +1,48 @@
+DESCRIPTION ----> WE ARE GIVEN WITH 'N' NUMBER OF COINS EACH WITH DIFFERENT DENOMINATION VALUE AND A SUM 'K'.CALCULATE THE MINIMUN NUMBER OF COINS NEEDED TO MAKE THAT SUM POSSIBLE.
+
+
+CODE : 
+
+ #include<bits/stdc++.h>
+ using namespace std;
+ 
+void maxWays(vector<int>&v, int k){
+    int size=v.size();
+    int dp[size+1][k+1];
+    for(int i=1;i<size;i++){
+        dp[i][0]=0;             // initialising first column with 0 because minimun number of coins needed to make sum of 0 is 0
+    }
+    for(int j=0;j<=k;j++){
+        dp[0][j]=INT_MAX-1;     // initialising first row with INT_MAX number of coins of denomination 0 required for making sum {1,2,3,...,k}
+    }                           // are INT_MAX, this max value will also help in further iteration when we have to calculate min value in each iteration when comparing with the value of previous row iteration.
+    for(int j=0;j<=k;j++){
+        if(j%v[1]==0){
+            dp[1][j]=j/v[1];
+        }
+        else{
+            dp[1][j]=INT_MAX-1;     
+        }
+    }
+    for(int i=2;i<size+1;i++){
+        for(int j=1;j<k+1;j++){
+            dp[i][j]=min(dp[i-1][j], 1+dp[i][j-v[i-1]]);    // BECAUSE OF THIS +1 IN THIS LINE WE HAVE INITIALIZED MAX VALUES WITH INT_MAX-1. BECAUSE IF IN CASE dp[i][j-v[i-1]] IS EQUAL TO INT_MAX, THEN ADDING +1 WILL NOT WORK AS int DATA TYPE CANT STORE LARGER VALUE THAN THAT AND OUR CODE WILL FAIL IN SOME TEST CASES.
+        }
+    }
+    cout<<dp[size][k];
+}
+
+ int main()
+ {
+     ios_base::sync_with_stdio(false); 
+     cin.tie(NULL); 
+ 
+    int n,k;
+    cin>>n>>k;
+    vector<int>v(n);
+    for(int i=0;i<n;i++){
+        cin>>v[i];
+    }
+    maxWays(v,k);
+ 
+ return 0;
+ }
