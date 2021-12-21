@@ -1,0 +1,55 @@
+<----WE SOLVE THIS PROBLEM USING RECURSIVE CALLS AND MEMOZISATION---->
+
+DESCRIPTION ----> GIVEN TWO ARRAYS, ONE CONTAINS THE WEIGHT OF EACH ITEM AND THE OTHER CONTAINS THE VALUE OF EACH ITEM.
+                  WE ARE THEN PROVIDED WITH A WEIGHT 'W' AND WE HAVE TO PICK ITEMS FROM OUR GIVEN ARRAY SUCH THAT THERE WEIGHT WILL BE EQUIVALENT TO 'W' AND THE VALUE IS MAXIMUM.
+                  IT IS CALLED 0/1 KNAPSACK BECAUSE WE CANT TAKE FRACTIONAL ITEM, WE HAVE TO TAKE ITEM AS A WHOLE (MEANS WHOLE 1 ITEM) OR EW CANT TAKE IT (MEANS 0 ITEM).
+                  
+                  TIME COMPLEXITY -> SINCE WE ARE STORING THE RESULT OF EACH RECURSIVE CALL IN A 2-D MATRIX/VECTOR, AND TAKING THE VALUE DIRECTLY FROM THE MATRIX IF THE SAME CALL
+                  HAS TO BE MADE AGAIN, THE TIME COMPLEXITY WILL BE O(nW), WHERE 'n' IS THE SIZE OF GIVEN ARRAY AND 'W' IS THE GIVEN WEIGHT.
+                  
+                  
+CODE : 
+
+
+ #include<bits/stdc++.h>
+ using namespace std;
+
+ int knapsack(int wt[], int val[], int W, int n){
+     
+     static int dp[n+1][W+1];
+     // memset(dp, -1, sizeof(dp));   // NOT USING MEMSET FOR INITIALISING AS I HAVE DECLARED STATIC 2-D ARRAY WHICH WILL INITIALIZE MY MATRIX WITH 0 BY DEFAULT.
+
+     if(n==0 || W==0){
+         return 0;
+     }
+     if(dp[n][W]!=0){
+         return dp[n][W];
+     }
+     if(wt[n-1]<=W){
+         dp[n][W]= max(val[n-1]+knapsack(wt,val,W-wt[n-1],n-1), knapsack(wt,val,W,n-1));      // HERE IN THIS STEP WE FIRST ADDING THE VALUE TO THE MATRIX AND THEN RETURNING IT.
+         return dp[n][W];
+     }
+     else if(wt[n-1]>W){
+         dp[n][W]= knapsack(wt,val,W,n-1);
+         return dp[n][W];
+     }
+ }
+
+ {
+     ios_base::sync_with_stdio(false); 
+     cin.tie(NULL); 
+     int n;
+     cin>>n;
+     int wt[n];
+     int val[n];
+     for(int i=0;i<n;i++){
+      cin>>wt[i];
+      cin>>val[i];
+     }
+     int W;     //HERE W IS THE MAX WEIGHT WE WANT TO STORE WITH MAX VALUE
+     cin>>W;
+         
+     cout<<knapsack(wt,val,W,n)<<endl;
+
+ return 0;
+ }
