@@ -1,0 +1,54 @@
+DESCRIPTION ----> SAME AS KNAPSACK 0/1 BUT HERE WE HAVE THE CHOICE TO SELECT A FRACTION OF A VALUE (IN CASE IF THE KNAPSACK BAG STILL HAVE SOME SPACE LEFT AND WE ARE STILL 
+                  REMAINING WITH ITEMS IN THE WEIGHT ARRAY, THEN WE CAN SELECT THE FRACTIONAL VALUE OF AN ITEM FROM THE WEIGHT ARRAY TO COMPENSATE FOR THE REMAINING SPACE 
+                  LEFT IN THE KNAPSACK BAG.)
+                  
+                  TIME COMPLEXITY --> WE ARE USING MULTIMAP HERE WHICH STORES THE VALUE IN SORTED MANNER IN 0(N) TIME COMPLEXITY AND RUNNING A FOR LOOP IN BACKWARD DIRECTION
+                                      (SO WE GET THE MAX WEIGHT/VALUE RATIO FIRST) FOR N TIMES.
+                                      SO THE FINAL TIME COMPLEXITY WILL BE O(N).
+
+
+
+CODE : 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void knapsack(vector<int>&wt, vector<int>&val, int W, int n){
+    multimap<double,int>valWtRatio;                                          0(N)
+    double maxValue = 0;
+    for (int i=0;i<n;i++) {
+        valWtRatio.insert(make_pair((double)val[i] / wt[i], i));
+    }
+  
+    for (auto it=valWtRatio.rbegin();it!=valWtRatio.rend();it++) {            0(N)
+        double fraction = (double)W / wt[it->second];
+        if (W>=0&& W>=wt[it->second]) {
+            maxValue+=val[it->second];
+            W-=wt[it->second];
+        }
+        else if (W<wt[it->second]) {
+            maxValue += fraction* val[it->second];
+            break;
+        }
+    }
+    return maxValue;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+
+    int n;
+    cin>>n;
+    vector<int>wt(n);
+    vector<int>val(n);
+    for(int i=0;i<n;i++){
+        cin>>wt[i]>>val[i];
+    }
+    int W;
+    cin>>W; 
+    cout<<knapsack(wt,val,W,n)<<endl; 
+
+return 0;
+}
