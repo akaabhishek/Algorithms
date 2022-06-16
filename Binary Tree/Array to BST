@@ -1,0 +1,17 @@
+//int n=0;
+    TreeNode* createBST(vector<int>&v, TreeNode* head, int low, int high){
+        if(low>high || high>n || low<0) return NULL;
+        int mid=(low+high)/2;
+        head=new TreeNode(v[mid]);
+        head->left=createBST(v,head->left,low,mid-1);
+        head->right=createBST(v,head->right,mid+1,high);                              // ARRAY MUST BE SORTED
+        return head;
+    }
+    
+    TreeNode* sortedArrayToBST(vector<int>& v) {
+        TreeNode* head;
+        int n;
+        n=v.size()-1;
+        head=createBST(v,head,0,n);
+        return head;
+    }
