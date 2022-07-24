@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void printBinary(int n){
+    for(int i=10;i>=0;--i){
+        cout<<((n>>i)&1);
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+
+    int a=5;
+    int b=~a;                   // Invert all bits               1's complement
+    int c=b+1;                  // Negative of variable a        2's complement
+    cout<<b<<" "<<c<<endl;
+    printBinary(a);
+    printBinary(b);
+
+return 0;
+}
