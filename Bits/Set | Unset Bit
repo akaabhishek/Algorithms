@@ -1,0 +1,19 @@
+void printBinary(int n){
+    for(int i=10;i>=0;--i){
+        cout<<((n>>i)&1);
+    }
+    cout<<endl;
+}
+
+int main()
+{ 
+
+    int a=5;
+    int i=2;
+    
+    printBinary(5 | 1<<i);      // SET iTH BIT
+    
+    printBinary(a&~(1<<i));     // UNSET iTH BIT
+
+return 0;
+}
