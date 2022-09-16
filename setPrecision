@@ -1,0 +1,6 @@
+double pi = 3.14159, npi = -3.14159;
+    cout << fixed << setprecision(6) << pi <<" "<<npi;
+    
+    
+ // SET PRECISION UPTO 6 DIGITS AFTER DECIMAL.
+         
