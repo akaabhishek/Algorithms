@@ -1,0 +1,51 @@
+class Solution {
+public:
+
+    bool isLeaf(Node *root){
+        return(!root->left && !root->right);
+    }
+
+    void leftNodes(Node * root, vector<int> &v){
+        Node *curr_node=root->left;
+        while(curr_node != NULL){
+            if(!isLeaf(curr_node)) v.push_back(curr_node->data);
+            if(curr_node->left) curr_node = curr_node->left;
+            else curr_node=curr_node->right;
+        }
+}
+
+void leafNodes(Node * root, vector<int> &v){
+    if(isLeaf(root)){
+        v.push_back(root->data);
+        return;
+    }
+    if(root->left) leafNodes(root->left, v);
+    if(root->right) leafNodes(root->right, v);
+}
+
+void rightNodes(Node * root, vector<int> &temp){
+    Node *curr_node=root->right;
+    while(curr_node != NULL){
+        if(!isLeaf(curr_node)) temp.push_back(curr_node->data);
+        if(curr_node->right) curr_node = curr_node->right;
+        else curr_node=curr_node->left;
+    }
+}
+
+    vector <int> boundary(Node *root)
+    {
+        vector<int>v;
+        if(!root) return v;
+        if(!isLeaf(root)) v.push_back(root->data);
+        leftNodes(root, v);
+        leafNodes(root, v);
+        vector<int>temp;
+        rightNodes(root, temp);
+        
+        for(int i=temp.size()-1; i>=0;i--){
+            v.push_back(temp[i]);
+        }
+        
+        return v;
+    }
+};
