@@ -1,0 +1,5 @@
+
+<-- vector<int>graph[n] -->
+
+
+void dfs(int vertex, vector<int> *graph, vector<int> &visited){
