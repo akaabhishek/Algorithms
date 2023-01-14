@@ -1,0 +1,9 @@
+  void func(uint32_t n){
+
+
+    string s=bitset<32>(n).to_string();       convert n into string of 32 bits
+    
+    to reverse this
+    int x=bitset<32>(s).to_ulong();           convert the 32 bit string back to int
+    
+ }
